@@ -43,19 +43,19 @@
     [self setValue:@(UIButtonTypeCustom) forKey:@"buttonType"];
     [self setTitle:@"獲取驗證碼" forState:UIControlStateNormal];
     self.titleLabel.font = [UIFont systemFontOfSize:12.0f];
-    [self setTitleColor:[UIColor colorWithHexString:@"#333333"] forState:UIControlStateNormal];
+    [self setTitleColor:[UIColor colorWithHexString:@"#999999"] forState:UIControlStateNormal];
     [self setTitleColor:[UIColor orangeColor] forState:UIControlStateDisabled];
     self.backgroundColor = [UIColor colorWithHexString:@"#f5f5f5"];
     self.layer.cornerRadius = 4;
-    self.layer.borderWidth = 0.5;
-    self.layer.borderColor = [UIColor colorWithHexString:@"#d0d0d0)"].CGColor;
+//    self.layer.borderWidth = 0.5;
+//    self.layer.borderColor = [UIColor colorWithHexString:@"#d0d0d0)"].CGColor;
 }
 
 //开始倒计时
 - (void)timeFireBeginFrom:(NSUInteger)startCount{
     
     _count = startCount;
-    [self setTitle:[NSString stringWithFormat:@"剩餘%lu秒",(unsigned long)_count] forState:UIControlStateDisabled];
+    [self setTitle:[NSString stringWithFormat:@"(%lus)后重发",(unsigned long)_count] forState:UIControlStateDisabled];
     _timer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(timerFired) userInfo:nil repeats:YES];
     [[NSRunLoop currentRunLoop] addTimer:_timer forMode:NSRunLoopCommonModes];
     
@@ -67,7 +67,7 @@
     
     if (--_count != 0) {
         
-        [self setTitle:[NSString stringWithFormat:@"剩餘%lu秒",(unsigned long)_count] forState:UIControlStateDisabled];
+        [self setTitle:[NSString stringWithFormat:@"(%lus)后重发",(unsigned long)_count] forState:UIControlStateDisabled];
     }else{
         
         self.enabled = YES;
