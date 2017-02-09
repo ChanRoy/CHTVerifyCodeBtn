@@ -10,6 +10,8 @@
 #import "CHTVerifyCodeBtn.h"
 @interface ViewController ()
 
+@property (weak, nonatomic) IBOutlet CHTVerifyCodeBtn *testBtn;
+
 @end
 
 @implementation ViewController
@@ -22,12 +24,11 @@
 
 - (IBAction)btnClick:(CHTVerifyCodeBtn *)btn {
     
-    [btn timeFireBeginFrom:10];
+    [_testBtn timeFireBeginFrom:10];
     
     //Do some other thing
     
 }
-
 
 
 - (void)didReceiveMemoryWarning {

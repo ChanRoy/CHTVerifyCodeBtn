@@ -43,16 +43,16 @@
     [self setValue:@(UIButtonTypeCustom) forKey:@"buttonType"];
     [self setTitle:@"獲取驗證碼" forState:UIControlStateNormal];
     self.titleLabel.font = [UIFont systemFontOfSize:12.0f];
-    [self setTitleColor:[UIColor colorWithHexString:@"#999999"] forState:UIControlStateNormal];
-    [self setTitleColor:[UIColor orangeColor] forState:UIControlStateDisabled];
+    [self setTitleColor:[UIColor colorWithHexString:@"#333333"] forState:UIControlStateNormal];
+    [self setTitleColor:[UIColor colorWithHexString:@"#999999"] forState:UIControlStateDisabled];
     self.backgroundColor = [UIColor colorWithHexString:@"#f5f5f5"];
     self.layer.cornerRadius = 4;
-//    self.layer.borderWidth = 0.5;
-//    self.layer.borderColor = [UIColor colorWithHexString:@"#d0d0d0)"].CGColor;
 }
 
 //开始倒计时
 - (void)timeFireBeginFrom:(NSUInteger)startCount{
+    
+    [self stopTimer];
     
     _count = startCount;
     [self setTitle:[NSString stringWithFormat:@"(%lus)后重发",(unsigned long)_count] forState:UIControlStateDisabled];
@@ -77,13 +77,19 @@
     }
 }
 
-- (void)dealloc{
+//销毁timer
+- (void)stopTimer{
     
     if (_timer != nil) {
         
         [_timer invalidate];
         _timer = nil;
     }
+}
+
+- (void)dealloc{
+    
+    [self stopTimer];
 }
 
 
