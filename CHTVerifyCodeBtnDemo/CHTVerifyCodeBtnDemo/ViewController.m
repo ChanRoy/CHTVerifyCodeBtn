@@ -8,7 +8,7 @@
 
 #import "ViewController.h"
 #import "CHTVerifyCodeBtn.h"
-@interface ViewController ()
+@interface ViewController ()<CHTVerifyCodeBtnDelegate>
 
 @property (weak, nonatomic) IBOutlet CHTVerifyCodeBtn *testBtn;
 
@@ -19,17 +19,27 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
+    
+    _testBtn.delegate = self;
 }
 
 
 - (IBAction)btnClick:(CHTVerifyCodeBtn *)btn {
     
-    [_testBtn timeFireBeginFrom:10];
+    [btn timeFireBeginFrom:10];
     
     //Do some other thing
     
 }
 
+#pragma mark - CHTVerifyCodeBtnDelegate
+- (void)verifyCodeBtn:(CHTVerifyCodeBtn *)verifyCodeBtn didFireWithTimeCount:(NSUInteger)timeCount{
+    
+    if (verifyCodeBtn == _testBtn) {
+        
+        NSLog(@"****%lu****",timeCount);
+    }
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

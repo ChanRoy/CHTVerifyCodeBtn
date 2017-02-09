@@ -12,7 +12,6 @@
 @interface CHTVerifyCodeBtn ()
 
 @property (nonatomic, strong) NSTimer *timer;
-@property (nonatomic, assign) NSUInteger count;
 
 @end
 
@@ -41,7 +40,7 @@
     
     //KVC设置按钮状态，默认状态下按钮刷新标题时会闪烁
     [self setValue:@(UIButtonTypeCustom) forKey:@"buttonType"];
-    [self setTitle:@"獲取驗證碼" forState:UIControlStateNormal];
+    [self setTitle:@"获取验证码" forState:UIControlStateNormal];
     self.titleLabel.font = [UIFont systemFontOfSize:12.0f];
     [self setTitleColor:[UIColor colorWithHexString:@"#333333"] forState:UIControlStateNormal];
     [self setTitleColor:[UIColor colorWithHexString:@"#999999"] forState:UIControlStateDisabled];
@@ -54,8 +53,8 @@
     
     [self stopTimer];
     
-    _count = startCount;
-    [self setTitle:[NSString stringWithFormat:@"(%lus)后重发",(unsigned long)_count] forState:UIControlStateDisabled];
+    _timeCount = startCount;
+    [self setTitle:[NSString stringWithFormat:@"(%lus)后重发",(unsigned long)_timeCount] forState:UIControlStateDisabled];
     _timer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(timerFired) userInfo:nil repeats:YES];
     [[NSRunLoop currentRunLoop] addTimer:_timer forMode:NSRunLoopCommonModes];
     
@@ -65,15 +64,19 @@
 //计时器倒数
 - (void)timerFired{
     
-    if (--_count != 0) {
+    if (--_timeCount != 0) {
         
-        [self setTitle:[NSString stringWithFormat:@"(%lus)后重发",(unsigned long)_count] forState:UIControlStateDisabled];
+        [self setTitle:[NSString stringWithFormat:@"(%lus)后重发",(unsigned long)_timeCount] forState:UIControlStateDisabled];
     }else{
         
         self.enabled = YES;
-        [self setTitle:@"獲取驗證碼" forState:UIControlStateNormal];
+        [self setTitle:@"获取验证码" forState:UIControlStateNormal];
+        [self setTitle:@"获取验证码" forState:UIControlStateDisabled];
         [_timer invalidate];
         _timer = nil;
+    }
+    if (_delegate && [_delegate respondsToSelector:@selector(verifyCodeBtn:didFireWithTimeCount:)]) {
+        [_delegate verifyCodeBtn:self didFireWithTimeCount:_timeCount];
     }
 }
 
