@@ -11,6 +11,7 @@
 
 @protocol CHTVerifyCodeBtnDelegate <NSObject>
 
+//倒计时每一秒的回调
 - (void)verifyCodeBtn:(CHTVerifyCodeBtn *)verifyCodeBtn didFireWithTimeCount:(NSUInteger)timeCount;
 
 @end
@@ -20,6 +21,7 @@
  */
 @interface CHTVerifyCodeBtn : UIButton
 
+//倒计时的时间
 @property (nonatomic, assign, readonly) NSUInteger timeCount;
 
 @property (nonatomic, weak) id<CHTVerifyCodeBtnDelegate> delegate;
